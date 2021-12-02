@@ -17,18 +17,18 @@
             <Button Name="btnRaad" Grid.Column="1" Height="50px" Width="100px" VerticalAlignment="Top" Margin="83,325,83,0"  Click="btnRaad_Click" IsDefault="True">Raad</Button>
             <Button Name="btnNieuwSpel" Grid.Column="2" Height="50px" Width="100px" VerticalAlignment="Top"  Click="btnNieuwSpel_Click" Margin="97,325,70,0">Nieuw Spel</Button>
             <Button Name="btnVerbergWoord" Height="50px" Width="100px" VerticalAlignment="Top" Margin="83,325,83,0" Click="btnVerbergWoord_Click" Grid.Column="1" IsDefault="True">Verberg Woord</Button>
-            <Label x:Name="lblResultaat" Margin="10,83,10,195" FontSize="24" Content="          Start Spel" Grid.Column="1" Foreground="White"/>
+            <Label x:Name="lblResultaat" Margin="10,83,10,195" FontSize="24" Content="   Geef het te raden&#xD;&#xA;          woord in.&#xD;&#xA;" Grid.Column="1" Foreground="White"/>
             <Label Name="lblHartjes" Content="" HorizontalAlignment="Left" Margin="60,-8,0,0" VerticalAlignment="Top" Width="260" FontSize="24" Foreground="Red" Height="44" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.615"/>
             <Label Name="lblLevens" Content="Levens:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="White"/>
             <Label Content="Foute Letters:" HorizontalAlignment="Left" Margin="135,118,0,0" VerticalAlignment="Top" Height="40" Width="132" Foreground="White" FontSize="20" Grid.ColumnSpan="2"/>
             <Label Content="Woord:" HorizontalAlignment="Left" Margin="190,87,0,0" VerticalAlignment="Top" Height="38" Width="75" Foreground="White" FontSize="20"/>
-            <Image Name="imgGalg" Grid.Column="2" HorizontalAlignment="Left" Height="297" Margin="32,55,0,0" VerticalAlignment="Top" Width="265" />
+            <Image Name="imgGalg" Grid.Column="2" HorizontalAlignment="Left" Height="297" Margin="32,55,0,0" VerticalAlignment="Top" Width="265" Source="/hangman10.png" />
+            <Label Name="lblAfteller" Content="Label" HorizontalAlignment="Left" Margin="82,216,0,0" VerticalAlignment="Top" Height="68" Width="108" FontSize="20" Foreground="White"/>
+
         </Grid>
 
-
-
         <StackPanel Background="#FF004482" VerticalAlignment="Bottom">
-            <Label Name="lblTimer" Height="30px" Background="{x:Null}" Foreground="White">Timer</Label>
+            <Label x:Name="lblTimer" Height="30px" Background="{x:Null}" Foreground="White"/>
         </StackPanel>
     </Grid>
 </Window>

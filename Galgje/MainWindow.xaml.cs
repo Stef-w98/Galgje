@@ -27,12 +27,15 @@ namespace Galgje
         string fouteLetters = "";
         int levens = 10;
         
+        //int raadTimer = 10;
+        
 
         public MainWindow()
         {
             InitializeComponent();
             timer();
             txbInput.Focus();
+            imgGalg.Visibility = Visibility.Hidden;
             lblLevens.Visibility = Visibility.Hidden;
             btnRaad.Visibility = Visibility.Hidden;
             
@@ -45,6 +48,14 @@ namespace Galgje
 
         private void btnRaad_Click(object sender, RoutedEventArgs e)
         {
+            
+            /*raadTime();
+            if(raadTimer == 0)
+            {
+                MessageBox.Show("Test");
+                
+            }*/
+
             gevonden = false;
             string gebruikersInput = txbInput.Text.ToLower();
 
@@ -79,6 +90,8 @@ namespace Galgje
 
             }
 
+                        
+
             updateScherm();
             txbInput.Text = string.Empty;
             txbInput.Focus();
@@ -94,31 +107,35 @@ namespace Galgje
         {
 
             teRadenWoord = txbInput.Text.ToLower().ToCharArray();  
-            txbInput.Text = string.Empty;
-            btnVerbergWoord.Visibility = Visibility.Hidden;
             geradenWoord = new char[teRadenWoord.Length];
-            char[] charsToTrim = { '*', ' ', '\''};
+            //char[] charsToTrim = { '*', ' ', '\''};
 
-            //bool isIntString = txbInput.Text.All(char.IsDigit);
-/*
-            if (isIntString == false)
+            /*string s = txbInput.Text;
+            s.All(char.IsDigit);*/
+
+            bool isIntString = txbInput.Text.Any(c => char.IsDigit(c));
+
+            if (isIntString == false && !string.IsNullOrWhiteSpace(txbInput.Text) && !txbInput.Text.Any(Char.IsWhiteSpace))
             {
-                MessageBox.Show("Hello");
+                
+                 for (int i = 0; i < geradenWoord.Length; i++)
+                 {
+                    geradenWoord[i] = '＿';
+    
+                 }
+                
+                btnRaad.Visibility= Visibility.Visible;
+                txbInput.Text = string.Empty;
+                updateScherm();
             }
             else
             {
                 MessageBox.Show("Error");
-            }*/
-
-
-            for (int i = 0; i < geradenWoord.Length; i++)
-            {
-                geradenWoord[i] = '＿';
-
+                return;
             }
-                
-            btnRaad.Visibility= Visibility.Visible;
-            updateScherm();
+
+            btnVerbergWoord.Visibility = Visibility.Hidden;
+
 
                         
         }
@@ -137,11 +154,12 @@ namespace Galgje
                 hartjes += "♥ ";
             }
 
+            imgGalg.Visibility= Visibility.Visible;
             lblLevens.Visibility = Visibility.Visible;
             lblHartjes.Content = hartjes;
             lblResultaat.Content = $"{woord}\n{fouteLetters}";
-
             
+
         }
                
         private void raadLetter(char letter) 
@@ -185,9 +203,27 @@ namespace Galgje
         private void Timer_Tick(object sender, EventArgs e)
         {
             lblTimer.Content = DateTime.Now.ToString("HH:mm:ss");                   //Zet de timer op het label
+            
+
+        }
+        /*private void raadTime()
+        {
+            DispatcherTimer raadTime = new DispatcherTimer();
+            raadTime.Interval = new TimeSpan(0, 0, 1);
+            raadTime.Tick += Timer_Tick;
+            raadTime.Start();
         }
 
-       
+        private void raadTime_Tick(object sender, EventArgs e)
+        {
+            lblAfteller.Content = $"{raadTimer}";
+            raadTimer--;
+            if (raadTimer == 0)
+            {
+
+            }
+        }*/
+
 
     }
 }
