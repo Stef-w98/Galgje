@@ -5,23 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Galgje"
         mc:Ignorable="d"
-        Title="Galgje" Height="450" Width="800">
+        Title="Galgje" Height="500" Width="800">
     <Grid>
-        <Grid>
+        <Grid Background="#FF2F2F2F">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBox Name="txbInput" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="0.2,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="265" Grid.ColumnSpan="2" FontSize="24" FontFamily="Microsoft Sans Serif" TextChanged="txbInput_TextChanged"/>
-            <Button Name="btnRaad" Grid.Column="2" Height="50px" Width="100px" VerticalAlignment="Top" Margin="0,100"  Click="btnRaad_Click">Raad</Button>
-            <Button Name="btnNieuwSpel" Grid.Column="2" Height="50px" Width="100px" VerticalAlignment="Center"  Click="btnNieuwSpel_Click">Nieuw Spel</Button>
-            <Button Name="btnVerbergWoord" Grid.Column="2" Height="50px" Width="100px" VerticalAlignment="Bottom" Margin="0,110" Click="btnVerbergWoord_Click">Verberg Woord</Button>
-            <Label Name="lblResultaat" Width="300" Grid.ColumnSpan="3" Margin="248,119,252,159" FontSize="24">Start Spel</Label>
-            <Label Name="lblLevens" Content="" HorizontalAlignment="Left" Margin="120,49,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="335" FontSize="24" Foreground="Red"/>
+            <TextBox Name="txbInput" Grid.Column="1" HorizontalAlignment="Center" Height="40" Margin="0,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246" FontSize="24" FontFamily="Microsoft Sans Serif" TextChanged="txbInput_TextChanged"/>
+            <Button Name="btnRaad" Grid.Column="1" Height="50px" Width="100px" VerticalAlignment="Top" Margin="83,325,83,0"  Click="btnRaad_Click" IsDefault="True">Raad</Button>
+            <Button Name="btnNieuwSpel" Grid.Column="2" Height="50px" Width="100px" VerticalAlignment="Top"  Click="btnNieuwSpel_Click" Margin="97,325,70,0">Nieuw Spel</Button>
+            <Button Name="btnVerbergWoord" Height="50px" Width="100px" VerticalAlignment="Top" Margin="83,325,83,0" Click="btnVerbergWoord_Click" Grid.Column="1" IsDefault="True">Verberg Woord</Button>
+            <Label x:Name="lblResultaat" Margin="10,83,10,195" FontSize="24" Content="          Start Spel" Grid.Column="1" Foreground="White"/>
+            <Label Name="lblHartjes" Content="" HorizontalAlignment="Left" Margin="60,-8,0,0" VerticalAlignment="Top" Width="260" FontSize="24" Foreground="Red" Height="44" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.615"/>
+            <Label Name="lblLevens" Content="Levens:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="White"/>
+            <Label Content="Foute Letters:" HorizontalAlignment="Left" Margin="135,118,0,0" VerticalAlignment="Top" Height="40" Width="132" Foreground="White" FontSize="20" Grid.ColumnSpan="2"/>
+            <Label Content="Woord:" HorizontalAlignment="Left" Margin="190,87,0,0" VerticalAlignment="Top" Height="38" Width="75" Foreground="White" FontSize="20"/>
+            <Image Name="imgGalg" Grid.Column="2" HorizontalAlignment="Left" Height="297" Margin="32,55,0,0" VerticalAlignment="Top" Width="265" />
         </Grid>
-        <StackPanel Background="Aquamarine" VerticalAlignment="Bottom">
-            <Label Name="lblTimer" Height="30px">Timer</Label>
+
+
+
+        <StackPanel Background="#FF004482" VerticalAlignment="Bottom">
+            <Label Name="lblTimer" Height="30px" Background="{x:Null}" Foreground="White">Timer</Label>
         </StackPanel>
     </Grid>
 </Window>

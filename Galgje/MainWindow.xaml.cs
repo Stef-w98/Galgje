@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Galgje
 {
@@ -25,10 +26,16 @@ namespace Galgje
         char[] geradenWoord;        
         string fouteLetters = "";
         int levens = 10;
+        
 
         public MainWindow()
         {
             InitializeComponent();
+            timer();
+            txbInput.Focus();
+            lblLevens.Visibility = Visibility.Hidden;
+            btnRaad.Visibility = Visibility.Hidden;
+            
         }
 
         private void txbInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -50,6 +57,7 @@ namespace Galgje
                     fouteLetters += gebruikersInput;
                     fouteLetters += " ";
                     levens--;
+                    imgGalg.Source = new BitmapImage(new Uri(@"C:\Users\Stef\OneDrive - PXL\school\Semester 1\Code\C# Essentials 2021\Galgje\Galgje\img\hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
 
                 }
             }
@@ -89,14 +97,29 @@ namespace Galgje
             txbInput.Text = string.Empty;
             btnVerbergWoord.Visibility = Visibility.Hidden;
             geradenWoord = new char[teRadenWoord.Length];
+            char[] charsToTrim = { '*', ' ', '\''};
 
-            for(int i = 0; i < geradenWoord.Length; i++)
+            //bool isIntString = txbInput.Text.All(char.IsDigit);
+/*
+            if (isIntString == false)
+            {
+                MessageBox.Show("Hello");
+            }
+            else
+            {
+                MessageBox.Show("Error");
+            }*/
+
+
+            for (int i = 0; i < geradenWoord.Length; i++)
             {
                 geradenWoord[i] = '＿';
 
             }
-
+                
+            btnRaad.Visibility= Visibility.Visible;
             updateScherm();
+
                         
         }
         private void updateScherm()
@@ -114,7 +137,8 @@ namespace Galgje
                 hartjes += "♥ ";
             }
 
-            lblLevens.Content = hartjes;
+            lblLevens.Visibility = Visibility.Visible;
+            lblHartjes.Content = hartjes;
             lblResultaat.Content = $"{woord}\n{fouteLetters}";
 
             
@@ -122,12 +146,12 @@ namespace Galgje
                
         private void raadLetter(char letter) 
         {
-            for (int i = 0; i < teRadenWoord.Length; i++)
+            for (int i = 0; i < teRadenWoord.Length; i++)                           //Gaat over de lengte van het woord
             {
-                if(letter.Equals(teRadenWoord[i]))
+                if(letter.Equals(teRadenWoord[i]))                                  //Kijkt of het ingegeven karakter voorkomt in het te raden woord
                 {
                     
-                    geradenWoord[i] = letter;
+                    geradenWoord[i] = letter;                                       //Zet de _ om in het juist geraden karakter
                     gevonden = true;
                 }
                 
@@ -136,21 +160,34 @@ namespace Galgje
 
         private void raadWoord(char[] gebruikersInput)
         {
-            if (gebruikersInput.SequenceEqual(teRadenWoord))
+            if (gebruikersInput.SequenceEqual(teRadenWoord))                        //Kijkt of het ingegeven woord gelijk is aan het te raden woord
             {
-                geradenWoord = teRadenWoord;
+                geradenWoord = teRadenWoord;                                        //Vervangt de _ met het juist geraden woord
                 MessageBox.Show("Proficiat! Speler 2 heeft gewonnen!");
                 btnRaad.Visibility = Visibility.Hidden;
                 gevonden = true;
             }
             else
             {
-                levens--;
+                levens--;                                                           //Als het woord fout geraden is gaat er 1 leven af
+                imgGalg.Source = new BitmapImage(new Uri(@"C:\Users\Stef\OneDrive - PXL\school\Semester 1\Code\C# Essentials 2021\Galgje\Galgje\img\hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
             }
         }
 
+        private void timer()
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            lblTimer.Content = DateTime.Now.ToString("HH:mm:ss");                   //Zet de timer op het label
+        }
 
+       
 
     }
 }
