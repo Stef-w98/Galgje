@@ -35,6 +35,9 @@ namespace Galgje
             InitializeComponent();
             timer();
             txbInput.Focus();
+            lblAfteller.Visibility = Visibility.Hidden;
+            lblWoord.Visibility = Visibility.Hidden;
+            lblFout.Visibility = Visibility.Hidden;
             imgGalg.Visibility = Visibility.Hidden;
             lblLevens.Visibility = Visibility.Hidden;
             btnRaad.Visibility = Visibility.Hidden;
@@ -105,39 +108,41 @@ namespace Galgje
 
         private void btnVerbergWoord_Click(object sender, RoutedEventArgs e)
         {
-
-            teRadenWoord = txbInput.Text.ToLower().ToCharArray();  
-            geradenWoord = new char[teRadenWoord.Length];
-            //char[] charsToTrim = { '*', ' ', '\''};
-
-            /*string s = txbInput.Text;
-            s.All(char.IsDigit);*/
-
-            bool isIntString = txbInput.Text.Any(c => char.IsDigit(c));
-
-            if (isIntString == false && !string.IsNullOrWhiteSpace(txbInput.Text) && !txbInput.Text.Any(Char.IsWhiteSpace))
+            if (txbInput.Text.Length == 1)
             {
-                
-                 for (int i = 0; i < geradenWoord.Length; i++)
-                 {
-                    geradenWoord[i] = '＿';
-    
-                 }
-                
-                btnRaad.Visibility= Visibility.Visible;
-                txbInput.Text = string.Empty;
-                updateScherm();
+                MessageBox.Show("Woord moet minimum 2 letters bevatten");
+                return;
+
             }
             else
             {
-                MessageBox.Show("Error");
-                return;
+                teRadenWoord = txbInput.Text.ToLower().ToCharArray();  
+                geradenWoord = new char[teRadenWoord.Length];
+
+                bool isIntString = txbInput.Text.Any(c => char.IsDigit(c));
+
+                if (isIntString == false && !string.IsNullOrWhiteSpace(txbInput.Text) && !txbInput.Text.Any(Char.IsWhiteSpace))
+                {
+                
+                     for (int i = 0; i < geradenWoord.Length; i++)
+                     {
+                        geradenWoord[i] = '＿';
+    
+                     }
+                
+                    btnRaad.Visibility= Visibility.Visible;
+                    txbInput.Text = string.Empty;
+                    updateScherm();
+                }
+                else
+                {
+                    MessageBox.Show("Woord mag geen spaties of cijfers bevatten");
+                    return;
+                }
+
+                btnVerbergWoord.Visibility = Visibility.Hidden;
             }
 
-            btnVerbergWoord.Visibility = Visibility.Hidden;
-
-
-                        
         }
         private void updateScherm()
         {
@@ -154,8 +159,11 @@ namespace Galgje
                 hartjes += "♥ ";
             }
 
+            lblWoord.Visibility = Visibility.Visible;
+            lblFout.Visibility = Visibility.Visible;
             imgGalg.Visibility= Visibility.Visible;
             lblLevens.Visibility = Visibility.Visible;
+            lblAfteller.Visibility = Visibility.Visible;
             lblHartjes.Content = hartjes;
             lblResultaat.Content = $"{woord}\n{fouteLetters}";
             
