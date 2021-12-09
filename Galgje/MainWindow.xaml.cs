@@ -26,14 +26,18 @@ namespace Galgje
         char[] geradenWoord;        
         string fouteLetters = "";
         int levens = 10;
+
+        DispatcherTimer timer2 = new DispatcherTimer();
+        int time = 10;
         
-        //int raadTimer = 10;
-        
+
+
 
         public MainWindow()
         {
             InitializeComponent();
             timer();
+            afteller();
             txbInput.Focus();
             lblAfteller.Visibility = Visibility.Hidden;
             lblWoord.Visibility = Visibility.Hidden;
@@ -41,6 +45,7 @@ namespace Galgje
             imgGalg.Visibility = Visibility.Hidden;
             lblLevens.Visibility = Visibility.Hidden;
             btnRaad.Visibility = Visibility.Hidden;
+
             
         }
 
@@ -51,6 +56,8 @@ namespace Galgje
 
         private void btnRaad_Click(object sender, RoutedEventArgs e)
         {
+
+
             
             /*raadTime();
             if(raadTimer == 0)
@@ -58,6 +65,8 @@ namespace Galgje
                 MessageBox.Show("Test");
                 
             }*/
+
+            
 
             gevonden = false;
             string gebruikersInput = txbInput.Text.ToLower();
@@ -166,7 +175,12 @@ namespace Galgje
             lblAfteller.Visibility = Visibility.Visible;
             lblHartjes.Content = hartjes;
             lblResultaat.Content = $"{woord}\n{fouteLetters}";
-            
+            SolidColorBrush solidColor = new SolidColorBrush(Color.FromRgb(47, 47, 47));
+            kleur.Background = solidColor;
+            time = 10;
+            timer2.Start();
+
+
 
         }
                
@@ -214,23 +228,32 @@ namespace Galgje
             
 
         }
-        /*private void raadTime()
+        private void afteller()
         {
-            DispatcherTimer raadTime = new DispatcherTimer();
-            raadTime.Interval = new TimeSpan(0, 0, 1);
-            raadTime.Tick += Timer_Tick;
-            raadTime.Start();
+           
+            timer2.Tick += Timer_Tick1;
+            timer2.Interval = new TimeSpan(0, 0, 1);
+            
+                      
         }
 
-        private void raadTime_Tick(object sender, EventArgs e)
+        private void Timer_Tick1(object sender, EventArgs e)
         {
-            lblAfteller.Content = $"{raadTimer}";
-            raadTimer--;
-            if (raadTimer == 0)
+            lblAfteller.Content = time;
+            time--;
+            if (time < 0)
             {
-
+                timer2.Stop();
+                levens--;
+                imgGalg.Source = new BitmapImage(new Uri(@"C:\Users\Stef\OneDrive - PXL\school\Semester 1\Code\C# Essentials 2021\Galgje\Galgje\img\hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
+                SolidColorBrush solidColorRed = new SolidColorBrush(Colors.Red);
+                kleur.Background = solidColorRed;                
+                MessageBox.Show("Te traag");
+                updateScherm();
+                timer2.Start();
+                
             }
-        }*/
+        }
 
 
     }

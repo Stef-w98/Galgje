@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Galgje" MinHeight="500" Height="500" MinWidth="800" Width="800">
     <Grid>
-        <Grid Background="#FF2F2F2F">
+        <Grid Name="kleur" Background="#FF2F2F2F">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*"></ColumnDefinition>
                 <ColumnDefinition Width="50*"></ColumnDefinition>
