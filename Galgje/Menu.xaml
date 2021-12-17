@@ -16,7 +16,7 @@
         <StackPanel Height="300" Width="auto" Margin="75,92,160,92" Grid.Column="1" Grid.ColumnSpan="3">
             <Label Height="80" Width="240" Foreground="White" FontSize="48">Spel Mode</Label>
             <Button Name="btnSinglePlayer" HorizontalAlignment="Left" Margin="50, 50, 0, 0"  Height="80px" Width="160px" Click="buttonSinglePlayer_Click" Content="Single Player"/>
-            <Button Name="btnMultiPlayer" HorizontalAlignment="Right" Margin="0, -80, 50, 0"  Height="80px" Width="160px" Click="buttonSinglePlayer_Click" Content="Multi Player"/>
+            <Button Name="btnMultiPlayer" HorizontalAlignment="Right" Margin="0, -80, 50, 0"  Height="80px" Width="160px" Click="buttonMultiPlayer_Click" Content="Multi Player"/>
         </StackPanel>
     </Grid>
 </Window>

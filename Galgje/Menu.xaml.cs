@@ -24,9 +24,16 @@ namespace Galgje
             InitializeComponent();
         }
 
-        private void buttonSinglePlayer_Click(object sender, RoutedEventArgs e)
+        private void buttonMultiPlayer_Click(object sender, RoutedEventArgs e)
         {
             Multi multi = new Multi();
+            multi.Show();
+            this.Close();
+        }
+
+        private void buttonSinglePlayer_Click(object sender, RoutedEventArgs e)
+        {
+            Single multi = new Single();
             multi.Show();
             this.Close();
         }
