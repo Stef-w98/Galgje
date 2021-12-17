@@ -14,9 +14,42 @@
             <ColumnDefinition Width="143*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Height="300" Width="auto" Margin="75,92,160,92" Grid.Column="1" Grid.ColumnSpan="3">
-            <Label Height="80" Width="240" Foreground="White" FontSize="48">Spel Mode</Label>
-            <Button Name="btnSinglePlayer" HorizontalAlignment="Left" Margin="50, 50, 0, 0"  Height="80px" Width="160px" Click="buttonSinglePlayer_Click" Content="Single Player"/>
-            <Button Name="btnMultiPlayer" HorizontalAlignment="Right" Margin="0, -80, 50, 0"  Height="80px" Width="160px" Click="buttonMultiPlayer_Click" Content="Multi Player"/>
+            <Label Height="80" Width="240" Foreground="White" FontSize="48">Spel Mode</Label>            
+
+            <Button Foreground="Black" x:Name="btnSinglePlayer" Content="Multi Player" Margin="0, 50, 220, 0" Height="80px" Width="160px" Click="buttonSinglePlayer_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <ContentControl>
+                            <Border x:Name="buttonBorder" BorderThickness="3" Background="white">
+                                <ContentPresenter Content="Single Player" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ContentControl>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" Value="Yellow" TargetName="buttonBorder"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+
+            <Button Foreground="Black" x:Name="btnMultiPlayer" Content="Multi Player" Margin="220, -80, 0, 0" Height="80px" Width="160px" Click="buttonMultiPlayer_Click">
+                <Button.Template>                    
+                    <ControlTemplate TargetType="Button">
+                        <ContentControl>                            
+                            <Border x:Name="buttonBorder" BorderThickness="3" Background="white">
+                                <ContentPresenter Content="Multi Player" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ContentControl>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" Value="Yellow" TargetName="buttonBorder"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>                    
+                </Button.Template>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

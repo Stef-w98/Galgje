@@ -225,6 +225,7 @@ namespace Galgje
                 updateScherm();
                 btnVerbergWoord.Visibility = Visibility.Hidden;
                 txbInput.Visibility = Visibility.Visible;
+                txbInput.Focus();
             }
 
         }
@@ -251,7 +252,7 @@ namespace Galgje
             lblHartjes.Content = hartjes;
             lblResultaat.Content = $"{woord}\n{fouteLetters}";
             SolidColorBrush solidColor = new SolidColorBrush(Color.FromRgb(47, 47, 47));
-            kleur.Background = solidColor;
+            kleur.Background = solidColor;            
             time = 10;
             timer2.Start();
         }
