@@ -30,6 +30,7 @@ namespace Galgje
         int levens = 10;
 
         DispatcherTimer timer2 = new DispatcherTimer();
+        int userTime;
         int time;
         
         public Multi()
@@ -107,7 +108,7 @@ namespace Galgje
 
         private void btnVerbergWoord_Click(object sender, RoutedEventArgs e)
         {
-            time = int.Parse(Interaction.InputBox("Enter a number", "Set Timer"));
+            userTime = int.Parse(Interaction.InputBox("Enter a number", "Set Timer"));
 
 
             if (txbInput.Text.Length == 1)
@@ -170,7 +171,7 @@ namespace Galgje
             lblResultaat.Content = $"{woord}\n{fouteLetters}";
             SolidColorBrush solidColor = new SolidColorBrush(Color.FromRgb(47, 47, 47));
             kleur.Background = solidColor;
-            //time = 10;
+            time = userTime;
             
             timer2.Start();
 
