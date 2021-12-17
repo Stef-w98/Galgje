@@ -21,31 +21,132 @@ namespace Galgje
     /// </summary>
     public partial class Single : Window
     {
+        public static string[] galgjeWoorden = new string[]
+{
+    "grafeem",
+    "tjiftjaf",
+    "maquette",
+    "kitsch",
+    "pochet",
+    "convocaat",
+    "jakkeren",
+    "collaps",
+    "zuivel",
+    "cesium",
+    "voyant",
+    "spitten",
+    "pancake",
+    "gietlepel",
+    "karwats",
+    "dehydreren",
+    "viswijf",
+    "flater",
+    "cretonne",
+    "sennhut",
+    "tichel",
+    "wijten",
+    "cadeau",
+    "trotyl",
+    "chopper",
+    "pielen",
+    "vigeren",
+    "vrijuit",
+    "dimorf",
+    "kolchoz",
+    "janhen",
+    "plexus",
+    "borium",
+    "ontweien",
+    "quiche",
+    "ijverig",
+    "mecenaat",
+    "falset",
+    "telexen",
+    "hieruit",
+    "femelaar",
+    "cohesie",
+    "exogeen",
+    "plebejer",
+    "opbouw",
+    "zodiak",
+    "volder",
+    "vrezen",
+    "convex",
+    "verzenden",
+    "ijstijd",
+    "fetisj",
+    "gerekt",
+    "necrose",
+    "conclaaf",
+    "clipper",
+    "poppetjes",
+    "looikuip",
+    "hinten",
+    "inbreng",
+    "arbitraal",
+    "dewijl",
+    "kapzaag",
+    "welletjes",
+    "bissen",
+    "catgut",
+    "oxymoron",
+    "heerschaar",
+    "ureter",
+    "kijkbuis",
+    "dryade",
+    "grofweg",
+    "laudanum",
+    "excitatie",
+    "revolte",
+    "heugel",
+    "geroerd",
+    "hierbij",
+    "glazig",
+    "pussen",
+    "liquide",
+    "aquarium",
+    "formol",
+    "kwelder",
+    "zwager",
+    "vuldop",
+    "halfaap",
+    "hansop",
+    "windvaan",
+    "bewogen",
+    "vulstuk",
+    "efemeer",
+    "decisief",
+    "omslag",
+    "prairie",
+    "schuit",
+    "weivlies",
+    "ontzeggen",
+    "schijn",
+    "sousafoon"
+};
 
+        static Random randWoord = new Random();
+        int index = randWoord.Next(1, galgjeWoorden.Length);        
         bool gevonden = false;
         char[] teRadenWoord;
         char[] geradenWoord;
         string fouteLetters = "";
         int levens = 10;
-
         DispatcherTimer timer2 = new DispatcherTimer();
-        int time;
+        int time = 10;
 
         public Single()
         {
-
             InitializeComponent();
             timer();
             afteller();
-            txbInput.Focus();
+            txbInput.Visibility = Visibility.Hidden;
             lblAfteller.Visibility = Visibility.Hidden;
             lblWoord.Visibility = Visibility.Hidden;
             lblFout.Visibility = Visibility.Hidden;
             imgGalg.Visibility = Visibility.Hidden;
             lblLevens.Visibility = Visibility.Hidden;
             btnRaad.Visibility = Visibility.Hidden;
-
-
         }
 
         private void txbInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -55,8 +156,6 @@ namespace Galgje
 
         private void btnRaad_Click(object sender, RoutedEventArgs e)
         {
-
-
             gevonden = false;
             string gebruikersInput = txbInput.Text.ToLower();
 
@@ -70,7 +169,6 @@ namespace Galgje
                     fouteLetters += " ";
                     levens--;
                     imgGalg.Source = new BitmapImage(new Uri(@"C:\Users\Stef\OneDrive - PXL\school\Semester 1\Code\C# Essentials 2021\Galgje\Galgje\img\hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
-
                 }
             }
             else if (gebruikersInput.Length > 1)
@@ -82,16 +180,13 @@ namespace Galgje
                 return;
             }
 
-
             if (levens == 0)
             {
+                timer2.Stop();
                 geradenWoord = teRadenWoord;
                 MessageBox.Show("Sorry, Je hebt veloren!");
                 btnRaad.Visibility = Visibility.Hidden;
-
             }
-
-
 
             updateScherm();
             txbInput.Text = string.Empty;
@@ -106,24 +201,18 @@ namespace Galgje
 
         private void btnVerbergWoord_Click(object sender, RoutedEventArgs e)
         {
-            time = int.Parse(Interaction.InputBox("Enter a number", "Set Timer"));
+            //MessageBox.Show($"{galgjeWoorden[index]}");
+            //time = int.Parse(Interaction.InputBox("Enter a number", "Set Timer"));
 
-
-            if (txbInput.Text.Length == 1)
+            if (galgjeWoorden[index].Length == 1)
             {
                 MessageBox.Show("Woord moet minimum 2 letters bevatten");
                 return;
-
             }
             else
             {
-                teRadenWoord = txbInput.Text.ToLower().ToCharArray();
-                geradenWoord = new char[teRadenWoord.Length];
-
-                bool isIntString = txbInput.Text.Any(c => char.IsDigit(c));
-
-                if (isIntString == false && !string.IsNullOrWhiteSpace(txbInput.Text) && !txbInput.Text.Any(Char.IsWhiteSpace))
-                {
+                teRadenWoord = galgjeWoorden[index].ToLower().ToCharArray();
+                geradenWoord = new char[teRadenWoord.Length];                
 
                     for (int i = 0; i < geradenWoord.Length; i++)
                     {
@@ -131,17 +220,11 @@ namespace Galgje
 
                     }
 
-                    btnRaad.Visibility = Visibility.Visible;
-                    txbInput.Text = string.Empty;
-                    updateScherm();
-                }
-                else
-                {
-                    MessageBox.Show("Woord mag geen spaties of cijfers bevatten");
-                    return;
-                }
-
+                btnRaad.Visibility = Visibility.Visible;
+                txbInput.Text = string.Empty;
+                updateScherm();
                 btnVerbergWoord.Visibility = Visibility.Hidden;
+                txbInput.Visibility = Visibility.Visible;
             }
 
         }
@@ -169,10 +252,8 @@ namespace Galgje
             lblResultaat.Content = $"{woord}\n{fouteLetters}";
             SolidColorBrush solidColor = new SolidColorBrush(Color.FromRgb(47, 47, 47));
             kleur.Background = solidColor;
-            //time = 10;
-
+            time = 10;
             timer2.Start();
-
         }
 
         private void raadLetter(char letter)
@@ -181,11 +262,9 @@ namespace Galgje
             {
                 if (letter.Equals(teRadenWoord[i]))                                  //Kijkt of het ingegeven karakter voorkomt in het te raden woord
                 {
-
                     geradenWoord[i] = letter;                                       //Zet de _ om in het juist geraden karakter
                     gevonden = true;
                 }
-
             }
         }
 
@@ -193,8 +272,9 @@ namespace Galgje
         {
             if (gebruikersInput.SequenceEqual(teRadenWoord))                        //Kijkt of het ingegeven woord gelijk is aan het te raden woord
             {
+                timer2.Stop();
                 geradenWoord = teRadenWoord;                                        //Vervangt de _ met het juist geraden woord
-                MessageBox.Show("Proficiat! Speler 2 heeft gewonnen!");
+                MessageBox.Show("Proficiat! Je hebt gewonnen!");
                 btnRaad.Visibility = Visibility.Hidden;
                 gevonden = true;
             }
@@ -216,16 +296,11 @@ namespace Galgje
         private void Timer_Tick(object sender, EventArgs e)
         {
             lblTimer.Content = DateTime.Now.ToString("HH:mm:ss");                   //Zet de timer op het label
-
-
         }
         private void afteller()
         {
-
             timer2.Tick += Timer_Tick1;
             timer2.Interval = new TimeSpan(0, 0, 1);
-
-
         }
 
         private void Timer_Tick1(object sender, EventArgs e)
