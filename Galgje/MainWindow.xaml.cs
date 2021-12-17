@@ -19,8 +19,9 @@ namespace Galgje
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Multi : Window
     {
+
         bool gevonden = false;
         char[] teRadenWoord;
         char[] geradenWoord;        
@@ -30,11 +31,9 @@ namespace Galgje
         DispatcherTimer timer2 = new DispatcherTimer();
         int time = 10;
         
-
-
-
-        public MainWindow()
+        public Multi()
         {
+            
             InitializeComponent();
             timer();
             afteller();
@@ -46,7 +45,6 @@ namespace Galgje
             lblLevens.Visibility = Visibility.Hidden;
             btnRaad.Visibility = Visibility.Hidden;
 
-            
         }
 
         private void txbInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -55,17 +53,7 @@ namespace Galgje
         }
 
         private void btnRaad_Click(object sender, RoutedEventArgs e)
-        {
-
-
-            
-            /*raadTime();
-            if(raadTimer == 0)
-            {
-                MessageBox.Show("Test");
-                
-            }*/
-
+        {            
             
 
             gevonden = false;
@@ -180,8 +168,6 @@ namespace Galgje
             time = 10;
             timer2.Start();
 
-
-
         }
                
         private void raadLetter(char letter) 
@@ -209,7 +195,7 @@ namespace Galgje
             }
             else
             {
-                levens--;                                                           //Als het woord fout geraden is gaat er 1 leven af
+                levens--;                                                           //Als het woord fout geraden is gaat er 1 leven af en komt er een stuk van de afbeelding bij
                 imgGalg.Source = new BitmapImage(new Uri(@"C:\Users\Stef\OneDrive - PXL\school\Semester 1\Code\C# Essentials 2021\Galgje\Galgje\img\hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
             }
         }
