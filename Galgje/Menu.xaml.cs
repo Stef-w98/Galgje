@@ -26,7 +26,7 @@ namespace Galgje
 
         private void buttonMultiPlayer_Click(object sender, RoutedEventArgs e)
         {
-            Multi multi = new Multi();
+            Multi multi = new Multi();            
             multi.Show();
             this.Close();
         }

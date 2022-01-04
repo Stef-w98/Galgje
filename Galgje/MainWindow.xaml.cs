@@ -22,12 +22,17 @@ namespace Galgje
     /// </summary>
     public partial class Multi : Window
     {
+        string speler1;
+        string speler2;
+        string[] highscoreLijst = new string[4];
 
         bool gevonden = false;
+        bool newgame = false;
         char[] teRadenWoord;
         char[] geradenWoord;        
         string fouteLetters = "";
         int levens = 10;
+        const char underscore = '＿';
 
         DispatcherTimer timer2 = new DispatcherTimer();
         int userTime;
@@ -46,7 +51,8 @@ namespace Galgje
             imgGalg.Visibility = Visibility.Hidden;
             lblLevens.Visibility = Visibility.Hidden;
             btnRaad.Visibility = Visibility.Hidden;
-
+            btnHint.Visibility = Visibility.Hidden;
+            spelersToevoegen();
             
         }
 
@@ -71,7 +77,7 @@ namespace Galgje
                     fouteLetters += gebruikersInput;
                     fouteLetters += " ";
                     levens--;
-                    imgGalg.Source = new BitmapImage(new Uri(@"C:\Users\Stef\OneDrive - PXL\school\Semester 1\Code\C# Essentials 2021\Galgje\Galgje\img\hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
+                    imgGalg.Source = new BitmapImage(new Uri(@"/img/hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
 
                 }
             }
@@ -102,13 +108,26 @@ namespace Galgje
 
         private void btnNieuwSpel_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-            Application.Current.Shutdown();
+            newgame = true;
+            resetgame();
+            /*System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();*/
         }
 
         private void btnVerbergWoord_Click(object sender, RoutedEventArgs e)
         {
-            userTime = int.Parse(Interaction.InputBox("Enter a number", "Set Timer"));
+
+            userTime = int.Parse(Interaction.InputBox("Zet de timer tussen de 5 en de 20 seconden", "Zet de timer"));
+            if (userTime < 5)
+            {
+                MessageBox.Show("Timer moet boven de 5 seconden zijn");
+                return;
+            }
+            else if (userTime > 20)
+            {
+                MessageBox.Show("Timer moet onder de 20 seconden zijn");
+                return ;
+            }
 
 
             if (txbInput.Text.Length == 1)
@@ -134,6 +153,7 @@ namespace Galgje
                      }
                 
                     btnRaad.Visibility= Visibility.Visible;
+                    btnHint.Visibility= Visibility.Visible;
                     txbInput.Text = string.Empty;
                     updateScherm();
                 }
@@ -203,7 +223,7 @@ namespace Galgje
             else
             {
                 levens--;                                                           //Als het woord fout geraden is gaat er 1 leven af en komt er een stuk van de afbeelding bij
-                imgGalg.Source = new BitmapImage(new Uri(@"C:\Users\Stef\OneDrive - PXL\school\Semester 1\Code\C# Essentials 2021\Galgje\Galgje\img\hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
+                imgGalg.Source = new BitmapImage(new Uri(@"/img/hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
             }
         }
 
@@ -238,7 +258,7 @@ namespace Galgje
             {
                 timer2.Stop();
                 levens--;
-                imgGalg.Source = new BitmapImage(new Uri(@"C:\Users\Stef\OneDrive - PXL\school\Semester 1\Code\C# Essentials 2021\Galgje\Galgje\img\hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
+                imgGalg.Source = new BitmapImage(new Uri(@"/img/hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
                 SolidColorBrush solidColorRed = new SolidColorBrush(Colors.Red);
                 kleur.Background = solidColorRed;                
                 MessageBox.Show("Te traag");
@@ -248,6 +268,59 @@ namespace Galgje
             }
         }
 
+        private void btnHint_Click(object sender, RoutedEventArgs e)
+        {
+            bool hintFound = false;
+            while (!hintFound && geradenWoord.Contains(underscore))
+            {
+                Random randomLetter = new Random();
+                int index = randomLetter.Next(0, teRadenWoord.Length);
+                if (geradenWoord[index] == underscore)
+                {
+                    hintFound = true;
+                    raadLetter(teRadenWoord[index]);
+                }
+                    
+                updateScherm();
+
+            }
+
+        }
+
+        private void resetgame()
+        {
+            if (newgame)
+            {
+                gevonden = false;
+                newgame = false;                
+                fouteLetters = "";
+                levens = 10;
+                              
+            }
+        }
+
+        private void spelersToevoegen()
+        {
+            speler1 = Interaction.InputBox("Geef de naam van speler 1", "Speler 1");
+            speler2 = Interaction.InputBox("Geef de naam van speler 2", "Speler 2");
+            MessageBox.Show($"Speler 1: {speler1} \rSpeler 2: {speler2}");
+           
+
+
+        }
+
+        /*private void highscore()
+        {
+            for (int i = 0; highscoreLijst.Length > 0; i++)
+            {
+                if (highscoreLijst[i])
+                {
+                    highscoreLijst[i] = speler2;
+                }
+            }
+            MessageBox.Show($"{highscoreLijst}");
+        }*/
 
     }
+
 }

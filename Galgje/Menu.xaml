@@ -16,7 +16,7 @@
         <StackPanel Height="300" Width="auto" Margin="75,92,160,92" Grid.Column="1" Grid.ColumnSpan="3">
             <Label Height="80" Width="240" Foreground="White" FontSize="48">Spel Mode</Label>            
 
-            <Button Foreground="Black" x:Name="btnSinglePlayer" Content="Multi Player" Margin="0, 50, 220, 0" Height="80px" Width="160px" Click="buttonSinglePlayer_Click">
+            <Button Foreground="Black" x:Name="btnSinglePlayer" Content="Single Player" Margin="0, 50, 220, 0" Height="80px" Width="160px" Click="buttonSinglePlayer_Click" Cursor="Hand">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <ContentControl>
@@ -26,7 +26,7 @@
                         </ContentControl>
                         <ControlTemplate.Triggers>
                             <Trigger Property="Button.IsMouseOver" Value="true">
-                                <Setter Property="BorderBrush" Value="Yellow" TargetName="buttonBorder"></Setter>
+                                <Setter Property="BorderBrush" Value="green" TargetName="buttonBorder"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -34,7 +34,7 @@
             </Button>
 
 
-            <Button Foreground="Black" x:Name="btnMultiPlayer" Content="Multi Player" Margin="220, -80, 0, 0" Height="80px" Width="160px" Click="buttonMultiPlayer_Click">
+            <Button Foreground="Black" x:Name="btnMultiPlayer" Content="Multi Player" Margin="220, -80, 0, 0" Height="80px" Width="160px" Click="buttonMultiPlayer_Click" Cursor="Hand">
                 <Button.Template>                    
                     <ControlTemplate TargetType="Button">
                         <ContentControl>                            
@@ -44,7 +44,7 @@
                         </ContentControl>
                         <ControlTemplate.Triggers>
                             <Trigger Property="Button.IsMouseOver" Value="true">
-                                <Setter Property="BorderBrush" Value="Yellow" TargetName="buttonBorder"></Setter>
+                                <Setter Property="BorderBrush" Value="green" TargetName="buttonBorder"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>                    
