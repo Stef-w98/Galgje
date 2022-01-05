@@ -24,8 +24,15 @@ namespace Galgje
     {
         string speler1;
         string speler2;
-        string[] highscoreLijst = new string[4];
+        string[] highscoreLijst1 = new string[3] { "naam", "levens", "tijd" };
+        string[] highscoreLijst2 = new string[3] { "naam", "levens", "tijd" };
+        string[] highscoreLijst3 = new string[3] { "naam", "levens", "tijd" };
+        string[] highscoreLijst4 = new string[3] { "naam", "levens", "tijd" };
+        string[] highscoreLijst5 = new string[3] { "naam", "levens", "tijd" };
 
+
+        bool gameLost = false;
+        bool gameWon = false;
         bool gevonden = false;
         bool newgame = false;
         char[] teRadenWoord;
@@ -39,8 +46,7 @@ namespace Galgje
         int time;
         
         public Multi()
-        {
-            
+        {            
             InitializeComponent();
             timer();
             afteller();
@@ -52,8 +58,7 @@ namespace Galgje
             lblLevens.Visibility = Visibility.Hidden;
             btnRaad.Visibility = Visibility.Hidden;
             btnHint.Visibility = Visibility.Hidden;
-            spelersToevoegen();
-            
+            spelersToevoegen();            
         }
 
         private void txbInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -63,8 +68,6 @@ namespace Galgje
 
         private void btnRaad_Click(object sender, RoutedEventArgs e)
         {            
-            
-
             gevonden = false;
             string gebruikersInput = txbInput.Text.ToLower();
 
@@ -76,9 +79,7 @@ namespace Galgje
                 {
                     fouteLetters += gebruikersInput;
                     fouteLetters += " ";
-                    levens--;
-                    imgGalg.Source = new BitmapImage(new Uri(@"/img/hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
-
+                    neemLeven();
                 }
             }
             else if (gebruikersInput.Length > 1)
@@ -90,20 +91,26 @@ namespace Galgje
                 return;
             }
 
-
             if (levens == 0)
             {
-                geradenWoord = teRadenWoord;
-                MessageBox.Show("Sorry, Je hebt veloren!");
-                btnRaad.Visibility = Visibility.Hidden;
-
+                gameLost = true;
+                geradenWoord = teRadenWoord;                
+                btnRaad.Visibility = Visibility.Hidden;                
             }
 
-                        
-
-            updateScherm();
-            txbInput.Text = string.Empty;
-            txbInput.Focus();
+            if (gameLost)
+            {
+                updateScherm();
+                timer2.Stop();
+                MessageBox.Show($"Sorry {speler2}, je hebt veloren!");
+            }
+            else
+            {
+                updateScherm();
+                txbInput.Text = string.Empty;
+                txbInput.Focus();
+            }
+            
         }
 
         private void btnNieuwSpel_Click(object sender, RoutedEventArgs e)
@@ -120,36 +127,34 @@ namespace Galgje
             userTime = int.Parse(Interaction.InputBox("Zet de timer tussen de 5 en de 20 seconden", "Zet de timer"));
             if (userTime < 5)
             {
-                MessageBox.Show("Timer moet boven de 5 seconden zijn");
+                MessageBox.Show("Timer moet boven de 5 seconden zijn");                         //Vraagt user om tijd in te stellen
                 return;
             }
-            else if (userTime > 20)
-            {
+            else if (userTime > 20)                                                             //Check of dit tussen de 5 en de 20 sec is
+            {                                                                                   //Zo niet -> return
                 MessageBox.Show("Timer moet onder de 20 seconden zijn");
                 return ;
             }
 
-
             if (txbInput.Text.Length == 1)
             {
-                MessageBox.Show("Woord moet minimum 2 letters bevatten");
+                MessageBox.Show("Woord moet minimum 2 letters bevatten");                       //Kijkt of het een woord is, woord bevat meer dan 1 letter
                 return;
 
             }
             else
             {
-                teRadenWoord = txbInput.Text.ToLower().ToCharArray();  
+                teRadenWoord = txbInput.Text.ToLower().ToCharArray();                           //Zet hoofdletters naar lowercase en zet het dan in een char array
                 geradenWoord = new char[teRadenWoord.Length];
 
-                bool isIntString = txbInput.Text.Any(c => char.IsDigit(c));
+                bool isIntString = txbInput.Text.Any(c => char.IsDigit(c));                     //Check op cijfers
 
-                if (isIntString == false && !string.IsNullOrWhiteSpace(txbInput.Text) && !txbInput.Text.Any(Char.IsWhiteSpace))
+                if (isIntString == false && !string.IsNullOrWhiteSpace(txbInput.Text) && !txbInput.Text.Any(Char.IsWhiteSpace))  //Check op spaties
                 {
                 
                      for (int i = 0; i < geradenWoord.Length; i++)
                      {
-                        geradenWoord[i] = '＿';
-    
+                        geradenWoord[i] = '＿';                                                  //Zet elke char om naar een underscore    
                      }
                 
                     btnRaad.Visibility= Visibility.Visible;
@@ -172,15 +177,16 @@ namespace Galgje
             string woord = "";
             string hartjes = "";
 
-            for(int i = 0; i < geradenWoord.Length; i++)
-            {
+            for(int i = 0; i < geradenWoord.Length; i++)                        //Update het scherm
+            {                                                                   //Zet spaties op de juiste plaats
                 woord += geradenWoord[i] + " ";
             }
 
             for(int i = 0; i < levens; i++)
             {
-                hartjes += "♥ ";
+                hartjes += "♥ ";                                                //Zorgt voor het afbeelde van het juiste aantal levens
             }
+                        
 
             lblWoord.Visibility = Visibility.Visible;
             lblFout.Visibility = Visibility.Visible;
@@ -189,10 +195,9 @@ namespace Galgje
             lblAfteller.Visibility = Visibility.Visible;
             lblHartjes.Content = hartjes;
             lblResultaat.Content = $"{woord}\n{fouteLetters}";
-            SolidColorBrush solidColor = new SolidColorBrush(Color.FromRgb(47, 47, 47));
+            SolidColorBrush solidColor = new SolidColorBrush(Color.FromRgb(47, 47, 47));    //Zet de achtergrond terug op de juiste kleur
             kleur.Background = solidColor;
-            time = userTime;
-            
+            time = userTime;            
             timer2.Start();
 
         }
@@ -206,8 +211,7 @@ namespace Galgje
                     
                     geradenWoord[i] = letter;                                       //Zet de _ om in het juist geraden karakter
                     gevonden = true;
-                }
-                
+                }                
             }
         }
 
@@ -216,14 +220,42 @@ namespace Galgje
             if (gebruikersInput.SequenceEqual(teRadenWoord))                        //Kijkt of het ingegeven woord gelijk is aan het te raden woord
             {
                 geradenWoord = teRadenWoord;                                        //Vervangt de _ met het juist geraden woord
-                MessageBox.Show("Proficiat! Speler 2 heeft gewonnen!");
                 btnRaad.Visibility = Visibility.Hidden;
                 gevonden = true;
+                gameWon = true;      
+                timer2.Stop();
+                updateScherm();
             }
             else
             {
-                levens--;                                                           //Als het woord fout geraden is gaat er 1 leven af en komt er een stuk van de afbeelding bij
-                imgGalg.Source = new BitmapImage(new Uri(@"/img/hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
+                neemLeven();                
+            }
+
+            if (gameWon)
+            {              
+                DateTime huidigeTijd = DateTime.UtcNow;
+                string huidigeTijdStr = huidigeTijd.ToString("T");
+                timer2.Stop();
+                string score = levens.ToString();
+                highscoreLijst1[1] = score;
+                highscoreLijst1[2] = huidigeTijdStr;
+                MessageBox.Show($"Proficiat! {speler2} heeft gewonnen!");
+                MessageBox.Show($"{highscoreLijst1[0]} {highscoreLijst1[1]} {highscoreLijst1[2]}");
+            }
+            
+        }
+
+        
+
+        private void neemLeven()
+        {
+            levens--;                                                           //Als het woord fout geraden is gaat er 1 leven af en komt er een stuk van de afbeelding bij
+            imgGalg.Source = new BitmapImage(new Uri(@"/img/hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
+            if (levens == 0)
+            {
+                gameLost = true;
+                geradenWoord = teRadenWoord;
+                btnRaad.Visibility = Visibility.Hidden;
             }
         }
 
@@ -238,16 +270,12 @@ namespace Galgje
         private void Timer_Tick(object sender, EventArgs e)
         {
             lblTimer.Content = DateTime.Now.ToString("HH:mm:ss");                   //Zet de timer op het label
-            
-
         }
+       
         private void afteller()
-        {
-            
-            timer2.Tick += Timer_Tick1;
+        {            
+            timer2.Tick += Timer_Tick1;                                             
             timer2.Interval = new TimeSpan(0, 0, 1);
-            
-                      
         }
 
         private void Timer_Tick1(object sender, EventArgs e)
@@ -257,8 +285,7 @@ namespace Galgje
             if (time < 0)
             {
                 timer2.Stop();
-                levens--;
-                imgGalg.Source = new BitmapImage(new Uri(@"/img/hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
+                neemLeven();
                 SolidColorBrush solidColorRed = new SolidColorBrush(Colors.Red);
                 kleur.Background = solidColorRed;                
                 MessageBox.Show("Te traag");
@@ -291,6 +318,22 @@ namespace Galgje
         {
             if (newgame)
             {
+                timer2.Stop();
+                InitializeComponent();
+                timer();
+                afteller();
+                txbInput.Focus();
+                lblResultaat.Content = "Geef een geheim woord";
+                btnVerbergWoord.Visibility = Visibility.Visible;
+                lblAfteller.Visibility = Visibility.Hidden;
+                lblWoord.Visibility = Visibility.Hidden;
+                lblFout.Visibility = Visibility.Hidden;
+                imgGalg.Visibility = Visibility.Hidden;
+                lblLevens.Visibility = Visibility.Hidden;
+                btnRaad.Visibility = Visibility.Hidden;
+                btnHint.Visibility = Visibility.Hidden;
+                spelersToevoegen();
+                gameLost = false;
                 gevonden = false;
                 newgame = false;                
                 fouteLetters = "";
@@ -298,14 +341,13 @@ namespace Galgje
                               
             }
         }
-
+         
         private void spelersToevoegen()
         {
             speler1 = Interaction.InputBox("Geef de naam van speler 1", "Speler 1");
             speler2 = Interaction.InputBox("Geef de naam van speler 2", "Speler 2");
             MessageBox.Show($"Speler 1: {speler1} \rSpeler 2: {speler2}");
-           
-
+            highscoreLijst1[0] = speler2;              
 
         }
 

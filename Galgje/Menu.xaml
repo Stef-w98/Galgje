@@ -7,14 +7,16 @@
         mc:Ignorable="d"
        Title="Main Menu" MinHeight="500" Height="500" MinWidth="800" Width="800">
     <Grid Name="kleur2" Background="#FF2F2F2F">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="17*"/>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="143*"/>
         </Grid.ColumnDefinitions>
+        
         <StackPanel Height="300" Width="auto" Margin="75,92,160,92" Grid.Column="1" Grid.ColumnSpan="3">
-            <Label Height="80" Width="240" Foreground="White" FontSize="48">Spel Mode</Label>            
+            <Label Height="80" Width="240" Foreground="White" FontSize="48">Spel Mode</Label>
 
             <Button Foreground="Black" x:Name="btnSinglePlayer" Content="Single Player" Margin="0, 50, 220, 0" Height="80px" Width="160px" Click="buttonSinglePlayer_Click" Cursor="Hand">
                 <Button.Template>
@@ -35,9 +37,9 @@
 
 
             <Button Foreground="Black" x:Name="btnMultiPlayer" Content="Multi Player" Margin="220, -80, 0, 0" Height="80px" Width="160px" Click="buttonMultiPlayer_Click" Cursor="Hand">
-                <Button.Template>                    
+                <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <ContentControl>                            
+                        <ContentControl>
                             <Border x:Name="buttonBorder" BorderThickness="3" Background="white">
                                 <ContentPresenter Content="Multi Player" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
@@ -47,9 +49,10 @@
                                 <Setter Property="BorderBrush" Value="green" TargetName="buttonBorder"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
-                    </ControlTemplate>                    
+                    </ControlTemplate>
                 </Button.Template>
             </Button>
         </StackPanel>
+
     </Grid>
 </Window>

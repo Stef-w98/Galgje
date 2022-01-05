@@ -24,14 +24,14 @@ namespace Galgje
             InitializeComponent();
         }
 
-        private void buttonMultiPlayer_Click(object sender, RoutedEventArgs e)
+        private void buttonMultiPlayer_Click(object sender, RoutedEventArgs e) //Opent multiplayer window en sluit de menu window
         {
             Multi multi = new Multi();            
             multi.Show();
             this.Close();
         }
 
-        private void buttonSinglePlayer_Click(object sender, RoutedEventArgs e)
+        private void buttonSinglePlayer_Click(object sender, RoutedEventArgs e) //Opent singleplayer window en sluit de menu window
         {
             Single multi = new Single();
             multi.Show();

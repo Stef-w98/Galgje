@@ -137,7 +137,9 @@
   <ItemGroup>
     <Resource Include="hangman-full.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="square-ulitsa-doma-viselitsa.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="hangman10.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
