@@ -65,6 +65,45 @@
                 </Button.Template>
             </Button>
 
+            <Button Foreground="Black" Name="btnHint" Height="30" VerticalAlignment="Top" Margin="104,394,104,0" Click="btnHint_Click" Grid.Column="1" IsDefault="True">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <ContentControl>
+                            <Border x:Name="buttonBorder" BorderThickness="3" CornerRadius="5" Background="white" Cursor="Hand">
+                                <ContentPresenter Content="Hint" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ContentControl>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" Value="Red" TargetName="buttonBorder"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+                <Button.ToolTip>
+                    <ToolTip>
+                        Als je hint gebruikt kom je niet in de highscore!
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+
+            <Button Foreground="Black" Name="btnAfsluiten" Grid.Column="2" Height="30" VerticalAlignment="Top"  Click="btnAfsluiten_Click" Margin="102,394,75,0">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <ContentControl>
+                            <Border x:Name="buttonBorder" BorderThickness="3" CornerRadius="5" Background="Gray" Cursor="Hand">
+                                <ContentPresenter Content="Afsluiten" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ContentControl>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" Value="red" TargetName="buttonBorder"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
             <TextBox Name="txbInput" Grid.Column="1" HorizontalAlignment="Center" Height="40" Margin="0,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246" FontSize="24" FontFamily="Microsoft Sans Serif" TextChanged="txbInput_TextChanged"/>
             <Label Name="lblResultaat" Margin="10,83,10,280" FontSize="24" Content="       Start het spel" Grid.Column="1" Foreground="White"/>
             <Label Name="lblHartjes" Content="" HorizontalAlignment="Left" Margin="60,-8,0,0" VerticalAlignment="Top" Width="260" FontSize="24" Foreground="Red" Height="44" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.615"/>

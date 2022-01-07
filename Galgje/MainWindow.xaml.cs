@@ -35,7 +35,6 @@ namespace Galgje
         string fouteLetters = "";
         int levens = 10;
         const char underscore = '＿';
-
         DispatcherTimer timer2 = new DispatcherTimer();
         int userTime;
         int time;
@@ -55,8 +54,7 @@ namespace Galgje
             btnRaad.Visibility = Visibility.Hidden;
             btnHint.Visibility = Visibility.Hidden;
             spelersToevoegen();
-            timer2.Stop();
-            
+            timer2.Stop();            
         }
 
         private void txbInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -71,12 +69,12 @@ namespace Galgje
 
             if (gebruikersInput.Length == 1)
             {
-                raadLetter(gebruikersInput[0]);
+                raadLetter(gebruikersInput[0]);                                             //Kijkt of het een letter is en geen woord
 
                 if (!gevonden && !fouteLetters.Contains(gebruikersInput))
                 {
-                    fouteLetters += gebruikersInput;
-                    fouteLetters += " ";
+                    fouteLetters += gebruikersInput;                                        //Checked of de letter fout is, zo ja neemt hij een leven af
+                    fouteLetters += " ";                                                    //Zet de foute letters in een string
                     neemLeven();
                 }
             }
@@ -115,9 +113,7 @@ namespace Galgje
         {
             timer2.Stop();
             newgame = true;
-            resetgame();
-            /*System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-            Application.Current.Shutdown();*/
+            resetgame();            
         }
 
         private void btnVerbergWoord_Click(object sender, RoutedEventArgs e)
@@ -193,6 +189,7 @@ namespace Galgje
             hintKnop.Visibility = Visibility.Visible;
             imgGalg.Visibility= Visibility.Visible;
             lblLevens.Visibility = Visibility.Visible;
+            lblHartjes.Visibility = Visibility.Visible;
             lblAfteller.Visibility = Visibility.Visible;
             lblHartjes.Content = hartjes;
             lblResultaat.Content = $"{woord}\n{fouteLetters}";
@@ -258,7 +255,7 @@ namespace Galgje
 
         private void timer()
         {
-            DispatcherTimer timer = new DispatcherTimer();
+            DispatcherTimer timer = new DispatcherTimer();                          //Maakt nieuwe timer aan (current system time)
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += Timer_Tick;
             timer.Start();
@@ -283,11 +280,10 @@ namespace Galgje
             {
                 timer2.Stop();
                 neemLeven();
-                SolidColorBrush solidColorRed = new SolidColorBrush(Colors.Red);
+                SolidColorBrush solidColorRed = new SolidColorBrush(Colors.Red);        //Als de timer afloopt word scherm rood en gaat er een leven af
                 kleur.Background = solidColorRed;                
                 MessageBox.Show("Te traag");
-                updateScherm();
-                //timer2.Start();
+                updateScherm();             
                 
             }
         }
@@ -295,14 +291,14 @@ namespace Galgje
         private void btnHint_Click(object sender, RoutedEventArgs e)
         {
             
-            bool hintFound = false;
-            while (!hintFound && geradenWoord.Contains(underscore))
+            bool hintGevonden = false;
+            while (!hintGevonden && geradenWoord.Contains(underscore))                //Kijkt of er nog letters in het woord zijn die niet gevonden zijn (met _ dus)
             {
                 Random randomLetter = new Random();
-                int index = randomLetter.Next(0, teRadenWoord.Length);
-                if (geradenWoord[index] == underscore)
+                int index = randomLetter.Next(0, teRadenWoord.Length);             //Maakt een random aan en neemt zo een random letter
+                if (geradenWoord[index] == underscore)                             //Kijkt of het een letter is die je nog niet hebt
                 {
-                    hintFound = true;
+                    hintGevonden = true;                                              //Zet de bool op true zodat je niet in de highscore komt
                     raadLetter(teRadenWoord[index]);
                 }
 
@@ -321,6 +317,7 @@ namespace Galgje
                 txbInput.Focus();
                 lblResultaat.Content = "Geef een geheim woord";
                 btnVerbergWoord.Visibility = Visibility.Visible;
+                lblHartjes.Visibility = Visibility.Hidden;
                 lblAfteller.Visibility = Visibility.Hidden;
                 lblWoord.Visibility = Visibility.Hidden;
                 lblFout.Visibility = Visibility.Hidden;
@@ -335,13 +332,14 @@ namespace Galgje
                 newgame = false;                
                 fouteLetters = "";
                 levens = 10;
+                imgGalg.Source = new BitmapImage(new Uri(@"/img/hangman" + levens + ".png", UriKind.RelativeOrAbsolute));
                 timer2.Stop();
             }
         }
          
         private void spelersToevoegen()
         {
-            speler1 = Interaction.InputBox("Geef de naam van speler 1", "Speler 1");
+            speler1 = Interaction.InputBox("Geef de naam van speler 1", "Speler 1");            //Prompt de user om een spelers naam in te geven
             speler2 = Interaction.InputBox("Geef de naam van speler 2", "Speler 2");
             MessageBox.Show($"Speler 1: {speler1} \rSpeler 2: {speler2}");                      
 
@@ -351,22 +349,22 @@ namespace Galgje
         {
             if (hintGebruikt)
             {
-                return;
+                return;                                                                 //Als er een hint is gebruikt kom je niet in de highscore
             }
-            Speler speler = new Speler(naam, levens, tijd);
+            Speler speler = new Speler(naam, levens, tijd);                             //Maakt met de nodige gegeven een nieuwe speler aan in de spelers class
             highscoreLijst.Add(speler);
             highscoreLijst.Sort(vergelijk);
-            for(int i = highscoreLijst.Count - 1; i >= 5; i--)
+            for(int i = highscoreLijst.Count - 1; i >= 5; i--)              
             {
-                highscoreLijst.RemoveAt(i);
-            }
+                highscoreLijst.RemoveAt(i);                                             //NA het sorteren van alle spelers knipt hij de laatste af
+            }                                                                           //Zodat alleen de TOP 5 er staat
         }
 
         public string highscoreLijststr()
         {
             string lijst = "";            
 
-            foreach (Speler speler in highscoreLijst)
+            foreach (Speler speler in highscoreLijst)               //Gaat over de lijst van spelers in de highscore en zet alles in een string
             {
                 lijst += speler.info + "\n";                
             }
@@ -375,7 +373,7 @@ namespace Galgje
 
         private int vergelijk(Speler a, Speler b)
         {
-            return b.Score.CompareTo(a.Score);
+            return b.Score.CompareTo(a.Score);                      //Vergelijkt de scores om ze te ordenen van hoog (nr1) naar laag (nr5)
         }
 
         private void btnAfsluiten_Click(object sender, RoutedEventArgs e)
