@@ -403,9 +403,8 @@ namespace Galgje
                 lblHartjes.Visibility = Visibility.Hidden;
                 btnRaad.Visibility = Visibility.Hidden;
                 btnHint.Visibility = Visibility.Hidden;
-                spelersToevoegen();
-                //randWoord = new Random();
-                //randWoord.Next(1, galgjeWoorden.Length);
+                spelersToevoegen();                   
+                index = randWoord.Next(1, galgjeWoorden.Length);                
                 hintGebruikt = false;
                 gameLost = false;
                 gevonden = false;
