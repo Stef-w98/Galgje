@@ -37,5 +37,10 @@ namespace Galgje
             multi.Show();
             this.Close();
         }
+
+        private void MenuItemAfsluiten_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

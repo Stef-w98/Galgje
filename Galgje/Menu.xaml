@@ -8,13 +8,18 @@
        Title="Main Menu" MinHeight="500" Height="500" MinWidth="800" Width="800">
     <Grid Name="kleur2" Background="#FF2F2F2F">
         
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="17*"/>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="143*"/>
         </Grid.ColumnDefinitions>
-        
+        <Menu Height="19" Name="menu1" Width="2000" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF004482" Grid.ColumnSpan="4">
+            <MenuItem Header="Menu" Background="Gray">
+                <MenuItem Header="Afsluiten" Click="MenuItemAfsluiten_Click"  ></MenuItem>
+            </MenuItem>
+        </Menu>
         <StackPanel Height="300" Width="auto" Margin="75,92,160,92" Grid.Column="1" Grid.ColumnSpan="3">
             <Label Height="80" Width="240" Foreground="White" FontSize="48">Spel Mode</Label>
 
@@ -34,6 +39,9 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
+
+
+
 
 
             <Button Foreground="Black" x:Name="btnMultiPlayer" Content="Multi Player" Margin="220, -80, 0, 0" Height="80px" Width="160px" Click="buttonMultiPlayer_Click" Cursor="Hand">

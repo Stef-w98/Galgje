@@ -13,13 +13,22 @@
                 <ColumnDefinition Width="60*"></ColumnDefinition>
                 <ColumnDefinition Width="40*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            <Menu Height="19" Name="menu1" Width="2000" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF004482" Grid.ColumnSpan="4">
+                <MenuItem Header="Menu" Background="Gray">
+                    <MenuItem Header="Highscore" Click="btnHighscore_Click" ></MenuItem>
+                    <MenuItem Name="hintKnop" Header="Hint" Click="btnHint_Click" ></MenuItem>
+                    <MenuItem Header="Nieuw Spel" Click="btnNieuwSpel_Click" ></MenuItem>
+                    <MenuItem Header="Afsluiten" Click="btnAfsluiten_Click" ></MenuItem>
+                </MenuItem>
+            </Menu>
+
             <TextBox Name="txbInput" Grid.Column="1" HorizontalAlignment="Center" Height="40" Margin="0,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246" FontSize="24" FontFamily="Microsoft Sans Serif" TextChanged="txbInput_TextChanged"/>
 
             <Button Foreground="Black" Name="btnVerbergWoord" Height="50px" VerticalAlignment="Top" Margin="114,325,113,0" Click="btnVerbergWoord_Click" Grid.Column="1" IsDefault="True" Cursor="Hand">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <ContentControl>
-                            <Border x:Name="buttonBorder" BorderThickness="3" Background="white">
+                            <Border x:Name="buttonBorder" BorderThickness="3" CornerRadius="5" Background="white">
                                 <ContentPresenter Content="Verberg Woord" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ContentControl>
@@ -36,7 +45,7 @@
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <ContentControl>
-                            <Border x:Name="buttonBorder" BorderThickness="3" Background="white" Cursor="Hand" Focusable="True">
+                            <Border x:Name="buttonBorder" BorderThickness="3" CornerRadius="5" Background="white" Cursor="Hand" Focusable="True">
                                 <ContentPresenter Content="Raad" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ContentControl>
@@ -53,7 +62,7 @@
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <ContentControl>
-                            <Border x:Name="buttonBorder" BorderThickness="3" Background="white" Cursor="Hand">
+                            <Border x:Name="buttonBorder" BorderThickness="3" CornerRadius="5" Background="white" Cursor="Hand">
                                 <ContentPresenter Content="Nieuw Spel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ContentControl>
@@ -66,11 +75,28 @@
                 </Button.Template>
             </Button>
 
+            <Button Foreground="Black" Name="btnAfsluiten" Grid.Column="2" Height="30" VerticalAlignment="Top"  Click="btnAfsluiten_Click" Margin="84,394,58,0">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <ContentControl>
+                            <Border x:Name="buttonBorder" BorderThickness="3" CornerRadius="5" Background="Gray" Cursor="Hand">
+                                <ContentPresenter Content="Afsluiten" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ContentControl>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" Value="red" TargetName="buttonBorder"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
             <Button Foreground="Black" Name="btnHint" Height="30" VerticalAlignment="Top" Margin="131,394,130,0" Click="btnHint_Click" Grid.Column="1" IsDefault="True">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <ContentControl>                            
-                            <Border x:Name="buttonBorder" BorderThickness="3" Background="white" Cursor="Hand">
+                        <ContentControl>
+                            <Border x:Name="buttonBorder" BorderThickness="3" CornerRadius="5" Background="white" Cursor="Hand">
                                 <ContentPresenter Content="Hint" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ContentControl>
@@ -90,8 +116,8 @@
 
 
             <Label x:Name="lblResultaat" Margin="48,79,14,299" FontSize="24" Content="    Geef het te raden&#xA;           woord in.&#xA;" Grid.Column="1" Foreground="White"/>
-            <Label Name="lblHartjes" Content="" HorizontalAlignment="Left" Margin="60,-8,0,0" VerticalAlignment="Top" Width="260" FontSize="24" Foreground="Red" Height="44" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.615"/>
-            <Label Name="lblLevens" Content="Levens:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="White" Height="29"/>
+            <Label Name="lblHartjes" Content="" HorizontalAlignment="Left" Margin="60,16,0,0" VerticalAlignment="Top" Width="260" FontSize="24" Foreground="Red" Height="44" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.615"/>
+            <Label Name="lblLevens" Content="Levens:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="White" Height="29" Margin="0,24,0,0"/>
             <Label Name="lblFout" Content="Foute Letters:" HorizontalAlignment="Left" Margin="135,118,0,0" VerticalAlignment="Top" Height="40" Width="132" Foreground="White" FontSize="20" Grid.ColumnSpan="2"/>
             <Label Name="lblWoord" Content="Woord:" HorizontalAlignment="Left" Margin="190,87,0,0" VerticalAlignment="Top" Height="38" Width="75" Foreground="White" FontSize="20" Grid.ColumnSpan="2"/>
             <Image Name="imgGalg" Grid.Column="2" HorizontalAlignment="Left" Height="292" Margin="10,44,0,0" VerticalAlignment="Top" Width="255" Source="/hangman10.png" />

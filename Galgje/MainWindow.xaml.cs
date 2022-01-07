@@ -24,13 +24,8 @@ namespace Galgje
     {
         string speler1;
         string speler2;
-        string[] highscoreLijst1 = new string[3] { "naam", "levens", "tijd" };
-        string[] highscoreLijst2 = new string[3] { "naam", "levens", "tijd" };
-        string[] highscoreLijst3 = new string[3] { "naam", "levens", "tijd" };
-        string[] highscoreLijst4 = new string[3] { "naam", "levens", "tijd" };
-        string[] highscoreLijst5 = new string[3] { "naam", "levens", "tijd" };
-
-
+        List<Speler> highscoreLijst = new List<Speler>();        
+        bool hintGebruikt = false;
         bool gameLost = false;
         bool gameWon = false;
         bool gevonden = false;
@@ -51,6 +46,7 @@ namespace Galgje
             timer();
             afteller();
             txbInput.Focus();
+            hintKnop.Visibility = Visibility.Collapsed;
             lblAfteller.Visibility = Visibility.Hidden;
             lblWoord.Visibility = Visibility.Hidden;
             lblFout.Visibility = Visibility.Hidden;
@@ -58,7 +54,9 @@ namespace Galgje
             lblLevens.Visibility = Visibility.Hidden;
             btnRaad.Visibility = Visibility.Hidden;
             btnHint.Visibility = Visibility.Hidden;
-            spelersToevoegen();            
+            spelersToevoegen();
+            timer2.Stop();
+            
         }
 
         private void txbInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -115,6 +113,7 @@ namespace Galgje
 
         private void btnNieuwSpel_Click(object sender, RoutedEventArgs e)
         {
+            timer2.Stop();
             newgame = true;
             resetgame();
             /*System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
@@ -159,8 +158,9 @@ namespace Galgje
                 
                     btnRaad.Visibility= Visibility.Visible;
                     btnHint.Visibility= Visibility.Visible;
-                    txbInput.Text = string.Empty;
+                    txbInput.Text = string.Empty;                    
                     updateScherm();
+
                 }
                 else
                 {
@@ -190,6 +190,7 @@ namespace Galgje
 
             lblWoord.Visibility = Visibility.Visible;
             lblFout.Visibility = Visibility.Visible;
+            hintKnop.Visibility = Visibility.Visible;
             imgGalg.Visibility= Visibility.Visible;
             lblLevens.Visibility = Visibility.Visible;
             lblAfteller.Visibility = Visibility.Visible;
@@ -222,9 +223,9 @@ namespace Galgje
                 geradenWoord = teRadenWoord;                                        //Vervangt de _ met het juist geraden woord
                 btnRaad.Visibility = Visibility.Hidden;
                 gevonden = true;
-                gameWon = true;      
-                timer2.Stop();
+                gameWon = true;                  
                 updateScherm();
+                timer2.Stop();
             }
             else
             {
@@ -233,18 +234,14 @@ namespace Galgje
 
             if (gameWon)
             {              
-                DateTime huidigeTijd = DateTime.UtcNow;
-                string huidigeTijdStr = huidigeTijd.ToString("T");
+                DateTime huidigeTijd = DateTime.Now;
+                updateHighscore(huidigeTijd, levens, speler2);
                 timer2.Stop();
-                string score = levens.ToString();
-                highscoreLijst1[1] = score;
-                highscoreLijst1[2] = huidigeTijdStr;
-                MessageBox.Show($"Proficiat! {speler2} heeft gewonnen!");
-                MessageBox.Show($"{highscoreLijst1[0]} {highscoreLijst1[1]} {highscoreLijst1[2]}");
+                MessageBox.Show($"Proficiat! {speler2} heeft gewonnen!", "Winner!", MessageBoxButton.OK);
+                MessageBox.Show(highscoreLijststr(), "Highscore", MessageBoxButton.OK );
             }
             
         }
-
         
 
         private void neemLeven()
@@ -290,13 +287,14 @@ namespace Galgje
                 kleur.Background = solidColorRed;                
                 MessageBox.Show("Te traag");
                 updateScherm();
-                timer2.Start();
+                //timer2.Start();
                 
             }
         }
 
         private void btnHint_Click(object sender, RoutedEventArgs e)
         {
+            
             bool hintFound = false;
             while (!hintFound && geradenWoord.Contains(underscore))
             {
@@ -307,9 +305,9 @@ namespace Galgje
                     hintFound = true;
                     raadLetter(teRadenWoord[index]);
                 }
-                    
-                updateScherm();
 
+                hintGebruikt = true;    
+                updateScherm();
             }
 
         }
@@ -317,11 +315,9 @@ namespace Galgje
         private void resetgame()
         {
             if (newgame)
-            {
-                timer2.Stop();
+            {                
                 InitializeComponent();
-                timer();
-                afteller();
+                timer();                
                 txbInput.Focus();
                 lblResultaat.Content = "Geef een geheim woord";
                 btnVerbergWoord.Visibility = Visibility.Visible;
@@ -333,12 +329,13 @@ namespace Galgje
                 btnRaad.Visibility = Visibility.Hidden;
                 btnHint.Visibility = Visibility.Hidden;
                 spelersToevoegen();
+                hintGebruikt = false;
                 gameLost = false;
                 gevonden = false;
                 newgame = false;                
                 fouteLetters = "";
                 levens = 10;
-                              
+                timer2.Stop();
             }
         }
          
@@ -346,23 +343,50 @@ namespace Galgje
         {
             speler1 = Interaction.InputBox("Geef de naam van speler 1", "Speler 1");
             speler2 = Interaction.InputBox("Geef de naam van speler 2", "Speler 2");
-            MessageBox.Show($"Speler 1: {speler1} \rSpeler 2: {speler2}");
-            highscoreLijst1[0] = speler2;              
+            MessageBox.Show($"Speler 1: {speler1} \rSpeler 2: {speler2}");                      
 
         }
 
-        /*private void highscore()
+        private void updateHighscore(DateTime tijd, int levens, string naam )
         {
-            for (int i = 0; highscoreLijst.Length > 0; i++)
+            if (hintGebruikt)
             {
-                if (highscoreLijst[i])
-                {
-                    highscoreLijst[i] = speler2;
-                }
+                return;
             }
-            MessageBox.Show($"{highscoreLijst}");
-        }*/
+            Speler speler = new Speler(naam, levens, tijd);
+            highscoreLijst.Add(speler);
+            highscoreLijst.Sort(vergelijk);
+            for(int i = highscoreLijst.Count - 1; i >= 5; i--)
+            {
+                highscoreLijst.RemoveAt(i);
+            }
+        }
 
+        public string highscoreLijststr()
+        {
+            string lijst = "";            
+
+            foreach (Speler speler in highscoreLijst)
+            {
+                lijst += speler.info + "\n";                
+            }
+            return lijst;
+        }
+
+        private int vergelijk(Speler a, Speler b)
+        {
+            return b.Score.CompareTo(a.Score);
+        }
+
+        private void btnAfsluiten_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void btnHighscore_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(highscoreLijststr(), "Highscore", MessageBoxButton.OK);
+        }
     }
 
 }
