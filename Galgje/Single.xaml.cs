@@ -407,6 +407,7 @@ namespace Galgje
                 index = randWoord.Next(1, galgjeWoorden.Length);                
                 hintGebruikt = false;
                 gameLost = false;
+                gameWon = false;
                 gevonden = false;
                 newgame = false;
                 fouteLetters = "";
